@@ -33,6 +33,9 @@ export class UserService {
 
   // Retrieves a single user by their ID
   async findById(id: number): Promise<ServiceResponse<User | null>> {
+    if (Number.isNaN(id)) {
+      return ServiceResponse.failure("Invalid input", null, StatusCodes.BAD_REQUEST);
+    }
     try {
       const user = await this.userRepository.findByIdAsync(id);
       if (!user) {
